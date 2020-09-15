@@ -1,26 +1,43 @@
-import React from 'react'
-import Card from './components/Card'
+import React, { Component } from 'react'
 
-let movies = [
-  {
-    title: 'Goodfellas',
-    plot: 'The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate.',
-    poster: 'https://m.media-amazon.com/images/M/MV5BY2NkZjEzMDgtN2RjYy00YzM1LWI4ZmQtMjIwYjFjNmI3ZGEwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg'
-  },
-  {
-    title: 'The Room',
-    plot: 'Johnny is a successful bank executive who lives quietly in a San Francisco townhouse with his future wife Lisa. One day she unscrupulously seduces his best friend Mark. Nothing will ever be the same again.',
-    poster: 'https://m.media-amazon.com/images/M/MV5BYjEzN2FlYmYtNDkwMC00NGFkLWE5ODctYmE5NmYxNzE2MmRiXkEyXkFqcGdeQXVyMjMwODc5Mw@@._V1_SX300.jpg'
+class App extends Component {
+
+  state = {
+    item: '',
+    items: []
   }
-]
 
-const App = () => {
-  return (
-    <>
-      <h1>Hello World!</h1>
-      { movies.map(movie => <Card movie={movie} />) }
-    </>
-  )
+  handleInputChange = event => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
+  handleAddItem = event => {
+    event.preventDefault()
+    let items = JSON.parse(JSON.stringify(this.state.items))
+    items.push(this.state.item)
+    this.setState({ items })
+  }
+
+  render () {
+    return (
+      <>
+        <form>
+          <label htmlFor="item">item</label>
+          <input 
+            type="text" 
+            name="item"
+            value={this.state.item}
+            onChange={this.handleInputChange}/>
+          <button onClick={this.handleAddItem}>Add Item</button>
+        </form>
+        <ul>
+          {
+            this.state.items.map(item => <li>{item}</li>)
+          }
+        </ul>
+      </>
+    )
+  }
 }
 
 export default App
