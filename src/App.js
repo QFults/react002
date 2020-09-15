@@ -3,23 +3,38 @@ import React, { Component } from 'react'
 class App extends Component {
 
   state = {
-    count: 0,
+    item: '',
+    items: []
   }
 
-  handleIncrement = () => {
-    this.setState({ count: this.state.count + 1 })
+  handleInputChange = event => {
+    this.setState({ [event.target.name]: event.target.value })
   }
 
-  handleDecrement = () => {
-    this.setState({ count: this.state.count - 1 })
+  handleAddItem = event => {
+    event.preventDefault()
+    let items = JSON.parse(JSON.stringify(this.state.items))
+    items.push(this.state.item)
+    this.setState({ items })
   }
 
-  render() {
+  render () {
     return (
       <>
-        <h1>Count: {this.state.count}</h1>
-        <button onClick={this.handleIncrement}>+</button>
-        <button onClick={this.handleDecrement}>-</button>
+        <form>
+          <label htmlFor="item">item</label>
+          <input 
+            type="text" 
+            name="item"
+            value={this.state.item}
+            onChange={this.handleInputChange}/>
+          <button onClick={this.handleAddItem}>Add Item</button>
+        </form>
+        <ul>
+          {
+            this.state.items.map(item => <li>{item}</li>)
+          }
+        </ul>
       </>
     )
   }
