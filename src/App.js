@@ -22,6 +22,14 @@ class App extends Component {
       .catch(err => console.error(err))
   }
 
+  componentDidMount () {
+    axios.get('http://www.omdbapi.com/?apikey=trilogy&t=Goodfellas')
+      .then(({ data }) => {
+        this.setState({ movie: data })
+      })
+      .catch(err => console.error(err))
+  }
+
   render() {
     return (
       <>
